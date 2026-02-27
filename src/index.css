@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark sections */
+    --background: 0 0% 5%;
+    --foreground: 36 33% 93%;
+
+    --card: 0 0% 11%;
+    --card-foreground: 36 33% 93%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 36 33% 93%;
+
+    --primary: 40 55% 50%;
+    --primary-foreground: 0 0% 5%;
+
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 36 33% 93%;
+
+    --muted: 0 0% 11%;
+    --muted-foreground: 37 7% 50%;
+
+    --accent: 36 25% 85%;
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 40 55% 50%;
+
+    /* Light section tokens */
+    --cream: 30 33% 95%;
+    --cream-foreground: 0 0% 10%;
+    --warm-white: 33 38% 97%;
+    --warm-white-foreground: 0 0% 10%;
+    --stone: 33 14% 91%;
+    --stone-foreground: 0 0% 10%;
+    --border-light: 30 16% 86%;
+
+    /* Gold system */
+    --gold-primary: 40 55% 50%;
+    --gold-light: 40 52% 58%;
+    --gold-subtle: 40 55% 35%;
+    --border-gold: 40 55% 50%;
+
+    --radius: 0.25rem;
+
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 36 33% 93%;
+    --sidebar-primary: 40 55% 50%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 36 33% 93%;
+    --sidebar-border: 0 0% 16%;
+    --sidebar-ring: 40 55% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply px-6 md:px-12 lg:px-24 py-20 md:py-32;
+  }
+
+  .label-text {
+    @apply text-xs uppercase tracking-[0.2em] text-muted-foreground font-body font-medium;
+  }
+
+  .gold-divider {
+    @apply w-16 h-px bg-primary;
+  }
+
+  .card-surface {
+    @apply bg-card border border-border rounded-sm;
+  }
+
+  .gold-border-top {
+    @apply border-t-2 border-t-primary;
+  }
+
+  /* Light section helpers */
+  .section-cream {
+    background-color: hsl(var(--cream));
+    color: hsl(var(--cream-foreground));
+  }
+
+  .section-stone {
+    background-color: hsl(var(--stone));
+    color: hsl(var(--stone-foreground));
+  }
+
+  .section-warm-white {
+    background-color: hsl(var(--warm-white));
+    color: hsl(var(--warm-white-foreground));
+  }
+
+  /* CTA button with sweep animation */
+  .btn-gold {
+    @apply relative overflow-hidden border border-primary text-primary px-8 py-3.5 label-text inline-block;
+    z-index: 1;
+  }
+  .btn-gold::before {
+    content: '';
+    @apply absolute inset-0;
+    background: hsl(var(--primary));
+    transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+  }
+  .btn-gold:hover::before {
+    transform: translateX(0);
+  }
+  .btn-gold:hover {
+    color: hsl(var(--primary-foreground));
+  }
+
+  .btn-gold-filled {
+    @apply relative overflow-hidden bg-primary text-primary-foreground px-8 py-3.5 label-text inline-block;
+    z-index: 1;
+  }
+  .btn-gold-filled:hover {
+    opacity: 0.9;
+  }
+
+  /* Gold line separator that animates on scroll */
+  .gold-line-animated {
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary)), transparent);
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .gold-line-animated.visible {
+    width: 100%;
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 48px rgba(196, 151, 58, 0.12);
+    border-color: hsl(var(--border-gold) / 0.6);
+  }
+
+  /* Image zoom on hover */
+  .card-image-wrapper {
+    @apply overflow-hidden;
+  }
+  .card-image-wrapper img {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-image-wrapper:hover img {
+    transform: scale(1.06);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@keyframes testimonial-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.carousel-track {
+  will-change: transform;
+}
